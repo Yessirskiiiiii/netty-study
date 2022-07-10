@@ -66,7 +66,7 @@ public class MultiThreadServer {
         // 初始化线程和 Selector
         public void register(SocketChannel sc) throws IOException {
             if (!start) {
-                selector = Selector.open();
+                selector = Selector.open(); // 先进行 Selector 的注册 不然会报空指针异常
                 thread = new Thread(this, name);
                 thread.start();
                 start = true;
