@@ -1,4 +1,4 @@
-package com.threewater.netty;
+package com.threewater.netty.hello;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelHandlerContext;

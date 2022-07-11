@@ -1,4 +1,4 @@
-package com.threewater.netty;
+package com.threewater.netty.hello;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
@@ -30,8 +30,11 @@ public class HelloClient {
                     }
                 })
                 // 5. 连接到服务器
+                // 异步非阻塞，main 发起了调用，真正执行 connect 是 nio 线程
+                // 带有 Future，Promise 的类型都是和异步方法配套使用，用来处理结果
                 .connect(new InetSocketAddress("localhost", 8080))
-                .sync()
+                // 使用 sync 方法同步处理结果
+                .sync() // 阻塞住当前线程，直到 nio 线程连接建立完毕
                 .channel()
                 // 6. 向服务器发送数据
                 .writeAndFlush("hello");
