@@ -20,7 +20,7 @@ public class TestMessageCodec {
                 new LoggingHandler(),
                 new MessageCodec());
         // encode
-        LoginRequestMessage message = new LoginRequestMessage("yym", "123", "虞赟淼");
+        LoginRequestMessage message = new LoginRequestMessage("yym", "123");
         channel.writeOutbound(message);
 
         // decode
