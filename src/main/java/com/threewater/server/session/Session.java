@@ -43,4 +43,11 @@ public interface Session {
      * @return channel
      */
     Channel getChannel(String username);
+
+    /**
+     * 根据 channel获取用户名
+     * @param channel 哪个 channel
+     * @return username 用户名
+     */
+    String getUsername(Channel channel);
 }
