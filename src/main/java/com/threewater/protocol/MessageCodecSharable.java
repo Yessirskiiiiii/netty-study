@@ -1,6 +1,6 @@
 package com.threewater.protocol;
 
-import com.threewater.Config;
+import com.threewater.config.Config;
 import com.threewater.message.Message;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;

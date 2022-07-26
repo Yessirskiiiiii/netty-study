@@ -5,17 +5,19 @@ import com.caucho.hessian.io.Hessian2Output;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
-import com.google.gson.Gson;
+import com.google.gson.*;
 import com.threewater.message.LoginRequestMessage;
 import com.threewater.message.LoginResponseMessage;
+import com.threewater.utils.GsonClassCodec;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 
 /**
  * @Author: Yessirskiii
  * @Date: 2022/07/22/11:06
- * @Description:
+ * @Description: 序列化算法
  */
 public enum Algorithm implements Serializer{
 
@@ -45,13 +47,15 @@ public enum Algorithm implements Serializer{
     Json {
         @Override
         public <T> T deserialize(Class<T> clazz, byte[] bytes) {
+            Gson gson = new GsonBuilder().registerTypeAdapter(Class.class, new GsonClassCodec()).create();
             String json = new String(bytes, StandardCharsets.UTF_8);
-            return new Gson().fromJson(json, clazz);
+            return gson.fromJson(json, clazz);
         }
 
         @Override
         public <T> byte[] serialize(T object) {
-            String json = new Gson().toJson(object);
+            Gson gson = new GsonBuilder().registerTypeAdapter(Class.class, new GsonClassCodec()).create();
+            String json = gson.toJson(object);
             return json.getBytes(StandardCharsets.UTF_8);
         }
     },
@@ -87,8 +91,8 @@ public enum Algorithm implements Serializer{
         // Kryo 可能存在线程安全问题，文档上是推荐放在 ThreadLocal 里，一个线程一个 Kryo，或者用 Kryo 自带的池
         private static final ThreadLocal<com.esotericsoftware.kryo.Kryo> kryoThreadLocal = ThreadLocal.withInitial(() -> {
             com.esotericsoftware.kryo.Kryo kryo = new Kryo();
-            kryo.register(LoginRequestMessage.class);
-            kryo.register(LoginResponseMessage.class);
+/*            kryo.register(LoginRequestMessage.class);
+            kryo.register(LoginResponseMessage.class);*/
             kryo.setReferences(true);
             kryo.setRegistrationRequired(false);
             return kryo;

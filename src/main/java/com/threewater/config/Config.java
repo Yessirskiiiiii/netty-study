@@ -1,7 +1,6 @@
-package com.threewater;
+package com.threewater.config;
 
 import com.threewater.protocol.Algorithm;
-import com.threewater.protocol.Serializer;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,7 +16,7 @@ public class Config {
     static Properties properties;
 
     static {
-        try (InputStream in = Config.class.getResourceAsStream("/applications.properties")) {
+        try (InputStream in = Config.class.getResourceAsStream("/application.properties")) {
             properties = new Properties();
             properties.load(in);
         } catch (IOException e) {
@@ -37,7 +36,7 @@ public class Config {
     public static Algorithm getSerializerAlgorithm() {
         String value = properties.getProperty("serializer.algorithm");
         if (value == null) {
-            return Algorithm.Java;
+            return Algorithm.Json;
         } else {
             return Algorithm.valueOf(value);
         }
