@@ -89,7 +89,7 @@ public enum Algorithm implements Serializer{
 
     Kryo {
         // Kryo 可能存在线程安全问题，文档上是推荐放在 ThreadLocal 里，一个线程一个 Kryo，或者用 Kryo 自带的池
-        private static final ThreadLocal<com.esotericsoftware.kryo.Kryo> kryoThreadLocal = ThreadLocal.withInitial(() -> {
+        private final ThreadLocal<com.esotericsoftware.kryo.Kryo> kryoThreadLocal = ThreadLocal.withInitial(() -> {
             com.esotericsoftware.kryo.Kryo kryo = new Kryo();
 /*            kryo.register(LoginRequestMessage.class);
             kryo.register(LoginResponseMessage.class);*/

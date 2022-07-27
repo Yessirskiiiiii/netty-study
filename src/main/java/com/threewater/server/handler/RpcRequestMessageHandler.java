@@ -24,6 +24,8 @@ public class RpcRequestMessageHandler extends SimpleChannelInboundHandler<RpcReq
     protected void channelRead0(ChannelHandlerContext ctx, RpcRequestMessage msg) {
         // 反射调用 根据类找到它的方法并调用
         RpcResponseMessage response = new RpcResponseMessage();
+        // 别忘记设置响应消息的编号
+        response.setSequenceId(msg.getSequenceId());
         try {
             HelloService service = (HelloService) ServiceFactory.getService(Class.forName(msg.getInterFaceName()));
             Method method = service.getClass().getMethod(msg.getMethodName(), msg.getParameterTypes());
@@ -32,12 +34,13 @@ public class RpcRequestMessageHandler extends SimpleChannelInboundHandler<RpcReq
         } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException |
                  IllegalArgumentException | InvocationTargetException e) {
             e.printStackTrace();
-            response.setExceptionValue(e);
+            String message = e.getCause().getMessage();
+            response.setExceptionValue(new Exception("远程调用出错:" + message));
         }
         ctx.writeAndFlush(response);
     }
 
-    public static void main(String[] args) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, ClassNotFoundException {
+    /*public static void main(String[] args) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, ClassNotFoundException {
         RpcRequestMessage msg = new RpcRequestMessage(
                 1,
                 "com.threewater.server.service.HelloService",
@@ -51,5 +54,5 @@ public class RpcRequestMessageHandler extends SimpleChannelInboundHandler<RpcReq
         Method method = service.getClass().getMethod(msg.getMethodName(), msg.getParameterTypes());
         Object invoke = method.invoke(service, msg.getParameterValue());
         System.out.println(invoke);
-    }
+    }*/
 }

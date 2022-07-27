@@ -3,7 +3,7 @@ package com.threewater.client;
 import com.threewater.message.RpcRequestMessage;
 import com.threewater.protocol.MessageCodecSharable;
 import com.threewater.protocol.ProtocolFrameDecoder;
-import com.threewater.server.handler.RpcResponseMessageHandler;
+import com.threewater.client.handler.RpcResponseMessageHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;

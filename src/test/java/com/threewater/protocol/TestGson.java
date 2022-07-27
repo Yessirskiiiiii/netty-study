@@ -3,8 +3,6 @@ package com.threewater.protocol;
 import com.google.gson.*;
 import com.threewater.utils.GsonClassCodec;
 
-import java.lang.reflect.Type;
-
 /**
  * @Author: Yessirskiii
  * @Date: 2022/07/26/16:23

@@ -1,4 +1,4 @@
-package com.threewater.server.handler;
+package com.threewater.client.handler;
 
 import com.threewater.message.RpcResponseMessage;
 import io.netty.channel.ChannelHandler;
