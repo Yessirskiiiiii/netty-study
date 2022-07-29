@@ -8,6 +8,7 @@ package com.threewater.server.service;
 public class HelloServiceImpl implements HelloService {
     @Override
     public String sayHello(String msg) {
+        // int a = 1 / 0;
         return "你好" + msg;
     }
 }
